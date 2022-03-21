@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/book-a-fly/static/css/main.058f90dc.css",
+    "main.js": "/book-a-fly/static/js/main.2b805a08.js",
+    "static/js/787.b6c76b67.chunk.js": "/book-a-fly/static/js/787.b6c76b67.chunk.js",
+    "index.html": "/book-a-fly/index.html",
+    "main.058f90dc.css.map": "/book-a-fly/static/css/main.058f90dc.css.map",
+    "main.2b805a08.js.map": "/book-a-fly/static/js/main.2b805a08.js.map",
+    "787.b6c76b67.chunk.js.map": "/book-a-fly/static/js/787.b6c76b67.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.058f90dc.css",
+    "static/js/main.2b805a08.js"
+  ]
+}
