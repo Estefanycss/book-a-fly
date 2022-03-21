@@ -1,19 +1,9 @@
 import { createMachine, assign } from 'xstate';
-import { fetchCountries } from '../utils/api';
 
-// const fetchCountries = (context, event) => new Promise((resolve, reject) => {
-//   // if (!event.query.length) {
-//     return reject('No query specified');
-//     // or:
-//     // throw new Error('No query specified');
-//   // }
-
-//   // return resolve(getSearchResults(event.query));
-// });
-
-const removePassengers = assign(
-  (context) => context.passengers.splice(0, context.passengers.length)
-);
+const fetchCountries = () => {
+  new Promise((resolve, reject) => {
+  return resolve([]);
+})};
 
 const passengersForm = {
   initial: 'form',
@@ -64,7 +54,6 @@ const bookingMachine = createMachine({
     passengers: [],
     countries: [],
     error: '',
-    selectedCountry: '',
   },
   states: {
     initial: {
@@ -74,39 +63,33 @@ const bookingMachine = createMachine({
     },
     search: {
       on: {
-        CONTINUE: {
-          target: 'passengers',
-          actions: assign({
-            selectedCountry: (context, event) => event.selectedCountry
-          }),
-        },
+        CONTINUE: 'passengers',
         CANCEL: 'initial'
       },
       ...fillCountries,
     },
-    tickets: {
-      after: {
-        5000: {
-          target: 'initial',
-          actions: 'removePassengers',
-        }
-      },
+    pay: {
       on: {
-        FINISH: {
+        FINISH: 'initial',
+        CANCEL: {
           target: 'initial',
-          actions: 'removePassengers',
+          actions: assign(
+            (context) => context.passengers.splice(0, context.passengers.length)
+          ),
         },
       }
     },
     passengers: {
       on: {
         DONE: {
-          target: 'tickets',
+          target: 'pay',
           cond: 'passengersFormFilled',
         },
         CANCEL: {
           target: 'initial',
-          actions: 'removePassengers',
+          actions: assign(
+            (context) => context.passengers.splice(0, context.passengers.length)
+          ),
         },
       },
       ...passengersForm,
@@ -118,9 +101,6 @@ const bookingMachine = createMachine({
       passengersFormFilled: (context) => {
         return context.passengers.length > 0;
       }
-    },
-    actions: { removePassengers }
+    }
   }
 );
-
-export default bookingMachine;

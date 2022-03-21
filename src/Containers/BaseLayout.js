@@ -6,10 +6,9 @@ import bookingMachine from '../Machines/bookingMachine';
 import './BaseLayout.css';
 
 export const BaseLayout = () => {
-  const [state, send] = useMachine(bookingMachine);
+  const [state, send] = useMachine(bookingMachine, { devTools: true });
 
-  console.log('MAQUINA', state);
-  console.log('NEXT EVENTS', state.nextEvents);
+  console.log('machine', state);
  
   return (
     <div className='BaseLayout'>
